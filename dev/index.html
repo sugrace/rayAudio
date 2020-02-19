@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="RemoteMonster live media service demo">
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="RayAudioStyle.css">
+    <script>
+      let myListener = {
+        onCreateChannel(chid) {
+            console.log(`EVENT FIRED: onConnect: ${chid}`);
+        },
+        onComplete() {
+            console.log('EVENT FIRED: onComplete');
+        },
+        onDisconnectChannel() {
+            // is called when other peer hang up.
+            console.log("some viewer is exited")
+        },
+        onClose() {
+            // is called when ray.close() method is called.
+            console.log('EVENT FIRED: onClose');
+        },
+        onError(error) {
+            console.log(`EVENT FIRED: onError: ${error}`);
+        }
+    };
+    </script>
+    <!-- The webrtc adapter is required for browser compatibility -->
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@remotemonster/sdk@2.4.20/remon.min.js"></script>
+    <script src="rayAudio.min.js"></script>
+</head>
+
+<body id="page-top">
+    <!-- Main Content -->
+    <div id="content">
+      <h1>rayAudioCast Studio Sample</h1>
+      Input Audio room id: 
+      <input id="channelIdInput" onkeydown="updateChannelId"></input>
+        <div style="width:300px; height:200px;">
+          <ray-audio key="1234567890" serviceId="SERVICEID1" 
+          listener="myListener" poster="img/poster.jpg"
+          ></ray-audio>
+        </div>
+    </div>
+</body>
+<script>
+  document.getElementById('channelIdInput').onkeydown= (e)=>{
+      document.getElementsByTagName("ray-audio")[0].setAttribute("channelId", e.target.value);
+  }
+</script>
+</html>
+
+
+
+
+
+
