@@ -5,7 +5,7 @@ class RayAudio extends HTMLElement {
     constructor(){
         super();
         this.listener;
-        this.remonAudio;
+        this.rayAudio;
         this.audioCtx
         this.analyser
         this.distortion
@@ -43,8 +43,8 @@ class RayAudio extends HTMLElement {
         this.audioInputListItem;
     }
     async connectedCallback() {
-        this.remonAudio = document.querySelector('ray-audio');
-        this.remonAudio.innerHTML = castBody;
+        this.rayAudio = document.querySelector('ray-audio');
+        this.rayAudio.innerHTML = castBody;
         this.canvas = document.querySelector('.visualizer');
         this.canvasCtx = this.canvas.getContext("2d");
         this.toggle       =  document.querySelector('.toggle');
@@ -54,8 +54,8 @@ class RayAudio extends HTMLElement {
         this.audioInputListItem = document.querySelectorAll('.audio-input-list-item');
         this.config = {
             credential: {
-                key: this.remonAudio.getAttribute("key")?this.remonAudio.getAttribute("key"):'1234567890',
-                serviceId: this.remonAudio.getAttribute("serviceId")?this.remonAudio.getAttribute("serviceId"):'SERVICEID1'
+                key: this.rayAudio.getAttribute("key")?this.rayAudio.getAttribute("key"):'1234567890',
+                serviceId: this.rayAudio.getAttribute("serviceId")?this.rayAudio.getAttribute("serviceId"):'SERVICEID1'
             },
             view: {
               local: "#localVideo",
@@ -66,7 +66,7 @@ class RayAudio extends HTMLElement {
               video: false
             }
         };
-        this.parsingAttr(this.remonAudio);
+        this.parsingAttr(this.rayAudio);
      
 
         this.toggle.onclick = () => this.togglePlay();
@@ -83,14 +83,14 @@ class RayAudio extends HTMLElement {
             element.onclick = () => this.updateAudioInput(element.id);
         })
     }
-    parsingAttr(remonAudio){
+    parsingAttr(rayAudio){
        
-        if (remonAudio.getAttribute("listener")){
-          this.listener= eval(remonAudio.getAttribute("listener"));
+        if (rayAudio.getAttribute("listener")){
+          this.listener= eval(rayAudio.getAttribute("listener"));
         }
         // this.listener.onStat = this.onStat;
         // this.listener.onAddRemoteStream= this.onAddRemoteStream;
-        this.poster= (remonAudio.getAttribute('poster'))? remonAudio.getAttribute('poster'):null;
+        this.poster= (rayAudio.getAttribute('poster'))? rayAudio.getAttribute('poster'):null;
         let remonBackgroundImage = new Image();
         remonBackgroundImage.src = this.poster? this.poster:null;
         remonBackgroundImage.onload = () => {
@@ -628,7 +628,7 @@ class RayAudio extends HTMLElement {
     } else {
         this.isCreated = true;
         this.isCaster = true;
-        this.channelId= this.remonAudio.getAttribute('channelId');
+        this.channelId= this.rayAudio.getAttribute('channelId');
         this.remon = new Remon({ config: this.config, listener: this.listener });
         this.remon.createCast(this.channelId?this.channelId:undefined);
     }
